@@ -45,9 +45,9 @@
         state: restarted
 
 - hosts: ubuntu
-  ansible_user: ubuntu
-  ansible_password: 123456a@
   vars:
+    ansible_become_user: root
+    ansible_become_pass: 123456a@
 
   tasks:
     - name: Install LEMP
