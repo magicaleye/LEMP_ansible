@@ -3,17 +3,26 @@
   vars:
 
   tasks:
-    - name: Install LEMP
+    - name: Install services
       yum:
         name: "{{item}}"
         state: latest
       with_items:
         - nginx
-        - mysql-server
-        - python3-pymysql
         - php
         - php-mysql
         - php-fpm
+    - name: Install MySQL repo
+      yum:
+        name: http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+        state: latest
+    - name: Install MySQL
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - mysql-community-server
+        - MySQL-python
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
@@ -22,7 +31,7 @@
       with_items:
         - mariadb
         - nginx
-    - name: FirewallD rules
+    - name: Setup FirewallD rules
       firewalld:
         permanent: yes
         immediate: yes
@@ -31,7 +40,7 @@
       with_items:
         - http
         - https
-    - name: Cai dat php-gd, rsync
+    - name: Install php-gd and rsync
       yum:
         name: "{{item}}"
       with_items:
