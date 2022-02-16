@@ -5,15 +5,16 @@
   tasks:
     - name: Install services
       yum:
-        name: "{{item}}"
+        name:
+          [
+            "nginx",
+            "mariadb-server",
+            "php",
+            "php-mysql",
+            "php-fpm",
+            "firewalld",
+          ]
         state: latest
-      with_items:
-        - nginx
-        - mariadb
-        - mariadb-server
-        - php
-        - php-mysql
-        - php-fpm
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
@@ -33,25 +34,7 @@
         - https
     - name: Install php-gd and rsync
       yum:
-        name: "{{item}}"
-      with_items:
-        - php-gd
-        - rsync
-    - name: Sets Nginx conf file
-      template:
-        src: "files/nginx.conf.j2"
-        dest: "/etc/nginx/sites-available/{{ http_conf }}"
-    - name: Enables new site
-      file:
-        src: "/etc/nginx/sites-available/{{ http_conf }}"
-        dest: "/etc/nginx/sites-enabled/{{ http_conf }}"
-        state: link
-      notify: Reload Nginx
-    - name: Removes "default" site
-      file:
-        path: "/etc/nginx/sites-enabled/default"
-        state: absent
-      notify: Reload Nginx
+        name: ["php-gd", "rsync"]
 
   handlers:
     - name: Reload Nginx
@@ -69,21 +52,22 @@
     - vars/default.yml
 
   tasks:
-    - name: Install LEMP
+    - name: Install services
       apt:
-        name: "{{item}}"
+        name:
+          [
+            "nginx",
+            "mariadb-server",
+            "php",
+            "php-mysql",
+            "php-fpm",
+            "firewalld",
+          ]
         state: latest
-      with_items:
-        - nginx
-        - mariadb-server
-        - php
-        - php-mysql
-        - php-fpm
-        - firewalld
-    - name: Remove nginx default site
-      shell: fuser -k 80/tcp
-      args:
-        warn: false
+    - name: Stop Apache2 service
+      service:
+        name: apache2
+        state: stopped
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
@@ -103,25 +87,7 @@
         - https
     - name: Install php-gd and rsync
       yum:
-        name: "{{item}}"
-      with_items:
-        - php-gd
-        - rsync
-    - name: Sets Nginx conf file
-      template:
-        src: "files/nginx.conf.j2"
-        dest: "/etc/nginx/sites-available/{{ http_conf }}"
-    - name: Enables new site
-      file:
-        src: "/etc/nginx/sites-available/{{ http_conf }}"
-        dest: "/etc/nginx/sites-enabled/{{ http_conf }}"
-        state: link
-      notify: Reload Nginx
-    - name: Removes "default" site
-      file:
-        path: "/etc/nginx/sites-enabled/default"
-        state: absent
-      notify: Reload Nginx
+        name: ["php-gd", "rsync"]
 
   handlers:
     - name: Reload Nginx
