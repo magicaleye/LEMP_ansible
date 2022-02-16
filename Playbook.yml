@@ -12,9 +12,6 @@
             "firewalld",
           ]
         state: latest
-    - name: Disable SELinux
-      ansible.posix.selinux:
-        state: disabled
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
@@ -39,17 +36,27 @@
       copy:
         src: startup_page/index.html
         dest: /var/www/html
+    - name: Disabling SELinux
+      selinux:
+        state: disabled
+      register: selinuxdisabled
+    - name: Reboot after change SELinux state
+      shell: "sleep 5 && reboot"
+      async: 1
+      poll: 0
+      when: selinuxdisabled is changed
 
   handlers:
     - name: Reload Nginx
       service:
         name: nginx
         state: reloaded
-
     - name: Restart Nginx
       service:
         name: nginx
         state: restarted
+    - name: Reboot server
+      command: systemctl reboot
 
 - hosts: ubuntu
   tasks:
