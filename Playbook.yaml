@@ -5,7 +5,7 @@
   tasks:
     - name: Install LEMP
       yum:
-        name: "{{items}}"
+        name: "{{item}}"
         state: latest
       with_items:
         - nginx
