@@ -57,7 +57,7 @@
         - php
         - php-mysql
         - php-fpm
-        - python3
+        - firewalld
     - name: Remove nginx default site
       shell: fuser -k 80/tcp
       args:
