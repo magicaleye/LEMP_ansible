@@ -43,3 +43,49 @@
       service:
         name: nginx
         state: restarted
+
+- hosts: ubuntu
+  remote_user: ubuntu
+  vars:
+
+  tasks:
+    - name: Install LEMP
+      yum:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - nginx
+        - mariadb
+        - mariadb-server
+        - php
+        - php-mysql
+        - php-fpm
+    - name: Ensure services enabled and started
+      systemd:
+        name: "{{item}}"
+        state: started
+        enabled: true
+      with_items:
+        - mariadb
+        - nginx
+    - name: FirewallD rules
+      firewalld:
+        permanent: yes
+        immediate: yes
+        service: "{{ item }}"
+        state: enabled
+      with_items:
+        - http
+        - https
+    - name: Cai dat php-gd, rsync
+      yum:
+        name: "{{item}}"
+      with_items:
+        - php-gd
+        - rsync
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
