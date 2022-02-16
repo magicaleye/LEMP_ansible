@@ -1,5 +1,6 @@
 - hosts: centos7
-  vars:
+  vars_files:
+    - vars/default.yml
 
   tasks:
     - name: Install services
@@ -59,7 +60,8 @@
         state: restarted
 
 - hosts: ubuntu
-  vars:
+  vars_files:
+    - vars/default.yml
 
   tasks:
     - name: Install LEMP
