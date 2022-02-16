@@ -11,12 +11,7 @@
 
 - Settings up Ansible control node
   1. Edit Ansible hosts file on Control node
-      [centos7]
-      192.168.10.101
-      192.168.10.102
-   
-      [ubuntu]
-      192.168.10.103
+     - Copy contents of hosts to /etc/ansible/hosts
   2. Update packages using yum/apt (All VMs)
      - sudo yum/apt update
      - sudo yum/apt upgrade -y
