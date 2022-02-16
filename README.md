@@ -13,6 +13,7 @@
 
   1. Update packages using yum/apt (All VMs)
      - sudo yum/apt update
+     - sudo yum/apt upgrade -y
      - (CentOS host) sudo yum install -y epel-release
      - Install ansible : sudo yum/apt install -y ansible
   2. Generate ssh key: ssh-keygen (Control node)
