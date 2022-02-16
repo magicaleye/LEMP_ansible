@@ -46,7 +46,7 @@
 
 - hosts: ubuntu
   vars:
-    ansible_become_user: root
+    ansible_become_user: ubuntu
     ansible_become_pass: 123456a@
 
   tasks:
