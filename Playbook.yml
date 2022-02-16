@@ -9,8 +9,8 @@
         state: latest
       with_items:
         - nginx
-        - mariadb
-        - mariadb-server
+        - mysql-server
+        - python3-pymysql
         - php
         - php-mysql
         - php-fpm
@@ -55,8 +55,8 @@
         state: latest
       with_items:
         - nginx
-        - mariadb
-        - mariadb-server
+        - mysql-server
+        - python3-pymysql
         - php
         - php-mysql
         - php-fpm
