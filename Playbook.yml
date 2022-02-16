@@ -1,7 +1,4 @@
 - hosts: centos7
-  vars_files:
-    - vars/default.yml
-
   tasks:
     - name: Install services
       yum:
@@ -35,6 +32,10 @@
     - name: Install php-gd and rsync
       yum:
         name: ["php-gd", "rsync"]
+    - name: Copy index.html to hosts
+      copy:
+        src: startup_page/index.html
+        dest: /var/www/html
 
   handlers:
     - name: Reload Nginx
@@ -88,6 +89,10 @@
     - name: Install php-gd and rsync
       yum:
         name: ["php-gd", "rsync"]
+    - name: Copy index.html to hosts
+      copy:
+        src: startup_page/index.html
+        dest: /var/www/html
 
   handlers:
     - name: Reload Nginx
