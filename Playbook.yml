@@ -49,9 +49,6 @@
         state: restarted
 
 - hosts: ubuntu
-  vars_files:
-    - vars/default.yml
-
   tasks:
     - name: Install services
       apt:
