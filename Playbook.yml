@@ -47,7 +47,7 @@
 - hosts: ubuntu
   become: true
   become_user: ubuntu
-  become_method: su
+  become_method: sudo
   vars:
 
   tasks:
