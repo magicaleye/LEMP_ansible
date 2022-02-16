@@ -12,6 +12,9 @@
             "firewalld",
           ]
         state: latest
+    - name: Disable SELinux
+      ansible.posix.selinux:
+        state: disabled
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
