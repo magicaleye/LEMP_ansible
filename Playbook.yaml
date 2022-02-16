@@ -37,10 +37,6 @@
       with_items:
         - php-gd
         - rsync
-    - name: Set Up php test page
-      template:
-        src: phpinfo.php.j2
-        dest: /var/www/html/info.php
 
   handlers:
     - name: restart nginx
