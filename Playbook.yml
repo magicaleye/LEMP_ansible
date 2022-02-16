@@ -13,8 +13,6 @@
         - php
         - php-mysql
         - php-fpm
-    - name: Remove nginx default site
-      shell: rm /etc/nginx/sites-enabled/default
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
@@ -60,6 +58,8 @@
         - php-mysql
         - php-fpm
         - python3
+    - name: Remove nginx default site
+      shell: rm /etc/nginx/sites-enabled/default
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
