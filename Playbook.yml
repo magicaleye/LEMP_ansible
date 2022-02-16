@@ -9,20 +9,11 @@
         state: latest
       with_items:
         - nginx
+        - mariadb
+        - mariadb-server
         - php
         - php-mysql
         - php-fpm
-    - name: Install MySQL repo
-      yum:
-        name: http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
-        state: latest
-    - name: Install MySQL
-      yum:
-        name: "{{item}}"
-        state: latest
-      with_items:
-        - mysql-community-server
-        - python3-pymysql
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
@@ -64,8 +55,7 @@
         state: latest
       with_items:
         - nginx
-        - mysql-server
-        - python3-pymysql
+        - mariadb-server
         - php
         - php-mysql
         - php-fpm
