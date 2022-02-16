@@ -54,7 +54,12 @@
       notify: Reload Nginx
 
   handlers:
-    - name: restart nginx
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+
+    - name: Restart Nginx
       service:
         name: nginx
         state: restarted
@@ -119,7 +124,12 @@
       notify: Reload Nginx
 
   handlers:
-    - name: restart nginx
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+
+    - name: Restart Nginx
       service:
         name: nginx
         state: restarted
