@@ -1,0 +1,55 @@
+- hosts: centos7
+  remote_user: root
+  vars:
+
+  tasks:
+    - name: Install LEMP
+      yum:
+        name: "{{items}}"
+        state: latest
+      with_items:
+        - nginx
+        - mariadb
+        - mariadb-server
+        - php
+        - php-mysql
+        - php-fpm
+    - name: Ensure services enabled and started
+      systemd:
+        name: "{{item}}"
+        state: started
+        enabled: true
+      with_items:
+        - mariadb
+        - nginx
+    - name: FirewallD rules
+      firewalld:
+        permanent: yes
+        immediate: yes
+        service: "{{ item }}"
+        state: enabled
+      with_items:
+        - http
+        - https
+    - name: Cai dat php-gd, rsync
+      yum:
+        name: "{{item}}"
+      with_items:
+        - php-gd
+        - rsync
+    - name: Set Up Nginx default site
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: restart nginx
+
+    - name: Set Up php test page
+      template:
+        src: phpinfo.php.j2
+        dest: /var/www/html/info.php
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
