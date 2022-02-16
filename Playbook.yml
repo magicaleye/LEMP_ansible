@@ -1,5 +1,4 @@
 - hosts: centos7
-  remote_user: root
   vars:
 
   tasks:
@@ -45,9 +44,6 @@
         state: restarted
 
 - hosts: ubuntu
-  become: true
-  become_user: ubuntu
-  become_method: sudo
   vars:
 
   tasks:
