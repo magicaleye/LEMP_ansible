@@ -60,6 +60,7 @@
         - python3
     - name: Remove nginx default site
       shell: rm /etc/nginx/sites-enabled/default
+      args:
         warn: false
     - name: Ensure services enabled and started
       systemd:
