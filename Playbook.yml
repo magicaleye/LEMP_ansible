@@ -22,7 +22,7 @@
         state: latest
       with_items:
         - mysql-community-server
-        - MySQL-python
+        - python3-pymysql
     - name: Ensure services enabled and started
       systemd:
         name: "{{item}}"
