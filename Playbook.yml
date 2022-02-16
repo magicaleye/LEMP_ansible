@@ -45,7 +45,8 @@
         state: restarted
 
 - hosts: ubuntu
-  remote_user: ubuntu
+  ansible_user: ubuntu
+  ansible_password: 123456a@
   vars:
 
   tasks:
